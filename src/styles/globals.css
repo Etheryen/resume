@@ -4,6 +4,12 @@
 
 @layer base {
   html {
-    font-size: 85%;
+    font-size: 35%;
+  }
+
+  @media (min-width: 768px) {
+    html {
+      font-size: 85%;
+    }
   }
 }

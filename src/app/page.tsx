@@ -166,7 +166,7 @@ export default async function HomePage() {
       <div className="rounded-lg border-2 border-slate-200 bg-slate-100 p-4 text-lg">
         {basics.summary}
       </div>
-      <Section title="Skills" icon={<BicepsFlexed />}>
+      <Section title="Skills" icon={<BicepsFlexed className="h-7 w-7" />}>
         <div className="flex flex-wrap gap-x-12 gap-y-4">
           {skills.map((s, i) => (
             <div key={i} className="flex flex-col gap-2">
@@ -185,7 +185,7 @@ export default async function HomePage() {
           ))}
         </div>
       </Section>
-      <Section title="Work experience" icon={<Briefcase />}>
+      <Section title="Work experience" icon={<Briefcase className="h-7 w-7" />}>
         <div className="flex flex-col gap-4">
           {work.map((w, i) => (
             <div key={i} className="flex flex-col gap-2">
@@ -213,7 +213,7 @@ export default async function HomePage() {
           ))}
         </div>
       </Section>
-      <Section title="Projects" icon={<PencilRuler />}>
+      <Section title="Projects" icon={<PencilRuler className="h-7 w-7" />}>
         <div className="flex flex-col gap-4">
           {projects.map((p, i) => (
             <div key={i} className="flex flex-col gap-2">
@@ -234,7 +234,7 @@ export default async function HomePage() {
       </Section>
       <Section
         title="Education"
-        icon={<GraduationCap />}
+        icon={<GraduationCap className="h-7 w-7" />}
         className="break-after-page"
       >
         <div className="flex flex-col gap-4">
@@ -261,7 +261,11 @@ export default async function HomePage() {
           ))}
         </div>
       </Section>
-      <Section title="Awards" icon={<Award />} className="print:pt-14">
+      <Section
+        title="Awards"
+        icon={<Award className="h-7 w-7" />}
+        className="print:pt-14"
+      >
         <div className="flex flex-col gap-4">
           {awards.map((a, i) => (
             <div key={i} className="flex flex-col gap-2">
@@ -279,7 +283,7 @@ export default async function HomePage() {
           ))}
         </div>
       </Section>
-      <Section title="Certificates" icon={<ShieldCheck />}>
+      <Section title="Certificates" icon={<ShieldCheck className="h-7 w-7" />}>
         <div className="flex flex-col gap-4">
           {certificates.map((c, i) => (
             <div key={i} className="flex flex-col gap-2">
@@ -296,7 +300,7 @@ export default async function HomePage() {
           ))}
         </div>
       </Section>
-      <Section title="Languages" icon={<Languages />}>
+      <Section title="Languages" icon={<Languages className="h-7 w-7" />}>
         <div className="flex gap-10">
           {languages.map((l, i) => (
             <div key={i} className="flex flex-col gap-2">
@@ -306,7 +310,7 @@ export default async function HomePage() {
           ))}
         </div>
       </Section>
-      <Section title="Interests" icon={<Goal />}>
+      <Section title="Interests" icon={<Goal className="h-7 w-7" />}>
         <div className="flex gap-10">
           {interests.map((interest, i) => (
             <div key={i} className="text-lg font-semibold">
