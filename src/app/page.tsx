@@ -18,6 +18,7 @@ import {
   Phone,
   ShieldCheck,
 } from "lucide-react";
+import { shortUrl } from "~/utils/short-url";
 
 // Slightly modified subset of JSON Resume schema
 export type Resume = {
@@ -89,11 +90,16 @@ export default async function HomePage() {
   const data = await getResume(env.GITHUB_USERNAME);
 
   if (!data) {
-    return <div>error occured while fetching resume.json github gist</div>;
+    return (
+      <div>
+        error occured while fetching your resume.json github gist, make sure to
+        fill in the GITHUB_USERNAME in .env as in .env.example
+      </div>
+    );
   }
 
   const {
-    basics,
+    basics: { profiles, location, ...basics },
     work,
     education,
     awards,
@@ -104,15 +110,13 @@ export default async function HomePage() {
     projects,
   } = data;
 
-  console.log(skills);
+  const shortLinkedInUrl = shortUrl(
+    profiles.find((p) => p.network == "LinkedIn")!.url,
+  );
 
-  const shortLinkedInUrl = basics.profiles
-    .find((p) => p.network == "LinkedIn")!
-    .url.replace("https://", "");
-
-  const shortGitHubUrl = basics.profiles
-    .find((p) => p.network == "GitHub")!
-    .url.replace("https://", "");
+  const shortGitHubUrl = shortUrl(
+    profiles.find((p) => p.network == "GitHub")!.url,
+  );
 
   return (
     <main className="mx-auto flex min-h-screen max-w-7xl flex-col gap-8 px-24 py-20 text-slate-600">
@@ -124,8 +128,7 @@ export default async function HomePage() {
           <div className="flex items-center gap-2">
             <MapPin className="h-6 w-6 text-slate-500" />
             <span>
-              {basics.location.city}, {basics.location.region},{" "}
-              {basics.location.country}
+              {location.city}, {location.region}, {location.country}
             </span>
           </div>
           <div className="flex gap-6">
@@ -141,15 +144,13 @@ export default async function HomePage() {
           <div className="flex gap-6">
             <div className="flex items-center gap-2">
               <Linkedin className="h-6 w-6 text-sky-500" />
-              <a
-                href={basics.profiles.find((p) => p.network == "LinkedIn")!.url}
-              >
+              <a href={profiles.find((p) => p.network == "LinkedIn")!.url}>
                 {shortLinkedInUrl}
               </a>
             </div>
             <div className="flex items-center gap-2">
               <Github className="h-6 w-6 text-slate-800" />
-              <a href={basics.profiles.find((p) => p.network == "GitHub")!.url}>
+              <a href={profiles.find((p) => p.network == "GitHub")!.url}>
                 {shortGitHubUrl}
               </a>
             </div>
@@ -231,7 +232,11 @@ export default async function HomePage() {
           ))}
         </div>
       </Section>
-      <Section title="Education" icon={<GraduationCap />}>
+      <Section
+        title="Education"
+        icon={<GraduationCap />}
+        className="break-after-page"
+      >
         <div className="flex flex-col gap-4">
           {education.map((e, i) => (
             <div key={i} className="flex flex-col gap-2">
@@ -256,7 +261,7 @@ export default async function HomePage() {
           ))}
         </div>
       </Section>
-      <Section title="Awards" icon={<Award />}>
+      <Section title="Awards" icon={<Award />} className="print:pt-14">
         <div className="flex flex-col gap-4">
           {awards.map((a, i) => (
             <div key={i} className="flex flex-col gap-2">
@@ -303,13 +308,23 @@ export default async function HomePage() {
       </Section>
       <Section title="Interests" icon={<Goal />}>
         <div className="flex gap-10">
-          {interests.map((int, i) => (
+          {interests.map((interest, i) => (
             <div key={i} className="text-lg font-semibold">
-              {int.name}
+              {interest.name}
             </div>
           ))}
         </div>
       </Section>
+      <div className="space-y-2 pt-4 text-center text-slate-500 print:pt-[53rem]">
+        <div>
+          I consent to the processing of my personal data for the purposes of
+          current and future recruitment processes
+        </div>
+        <div>
+          Wyrażam zgodę na przetwarzanie moich danych osobowych na potrzeby
+          obecnych i przyszłych procesów rekrutacyjnych
+        </div>
+      </div>
     </main>
   );
 }
